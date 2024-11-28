@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'input_page.dart';
 
-void main () => runApp(BMIcalculator());
+void main () => runApp(const BMIcalculator());
 
 class BMIcalculator extends StatelessWidget{
+  const BMIcalculator({super.key});
+
   @override
   Widget build(BuildContext context){
     return MaterialApp(
@@ -24,7 +26,7 @@ class BMIcalculator extends StatelessWidget{
           backgroundColor: Colors.purple,
         )
       ),
-      home: InputPage(),
+      home: const InputPage(),
     );
   }
 }
