@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-
-const textStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98),
-);
+import 'constants.dart';
 
 class IconContent extends StatelessWidget {
   const IconContent(this.icon, this.text, {super.key});
@@ -26,7 +21,7 @@ class IconContent extends StatelessWidget {
         ),
         Text(
           text,
-          style: const TextStyle(),
+          style: kTextStyle,
         ),
       ],
     );
