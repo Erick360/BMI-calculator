@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'constants.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_card.dart';
+import '../constants.dart';
+import 'results_page.dart';
+import '../components/bottom_button.dart';
+import '../components/round_icon_button.dart';
+import 'package:bmi_calculator/calculator.dart';
 
 enum Gender {
   male,
@@ -21,6 +25,7 @@ class _InputPageState extends State<InputPage> {
   int height = 180;
   int weight = 60;
   int age = 20;
+
   /*
   Color maleCardColor = inactiveCardColor;
   Color femaleCardColor = inactiveCardColor;
@@ -168,25 +173,19 @@ class _InputPageState extends State<InputPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            RoundIconButton(
-                              FontAwesomeIcons.minus,
-                              () {
-                                setState(() {
-                                  weight--;
-                                });
-                              }
-                            ),
+                            RoundIconButton(FontAwesomeIcons.minus, () {
+                              setState(() {
+                                weight--;
+                              });
+                            }),
                             const SizedBox(
                               width: 5.0,
                             ),
-                            RoundIconButton(
-                              FontAwesomeIcons.plus,
-                              () {
-                                setState(() {
-                                  weight++;
-                                });
-                              }
-                            ),
+                            RoundIconButton(FontAwesomeIcons.plus, () {
+                              setState(() {
+                                weight++;
+                              });
+                            }),
                           ],
                         ),
                       ],
@@ -195,8 +194,8 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReusableCard(
-                          () {},
-                      kActiveColor,
+                    () {},
+                    kActiveColor,
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -211,25 +210,19 @@ class _InputPageState extends State<InputPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            RoundIconButton(
-                                FontAwesomeIcons.minus,
-                                    () {
-                                  setState(() {
-                                    age--;
-                                  });
-                                }
-                            ),
+                            RoundIconButton(FontAwesomeIcons.minus, () {
+                              setState(() {
+                                age--;
+                              });
+                            }),
                             const SizedBox(
                               width: 5.0,
                             ),
-                            RoundIconButton(
-                                FontAwesomeIcons.plus,
-                                    () {
-                                  setState(() {
-                                    age++;
-                                  });
-                                }
-                            ),
+                            RoundIconButton(FontAwesomeIcons.plus, () {
+                              setState(() {
+                                age++;
+                              });
+                            }),
                           ],
                         ),
                       ],
@@ -239,15 +232,20 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            color: kBottomColor,
-            margin: const EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
-            child: const Text(
-              '',
-            ),
-          ),
+          BottomButton(() {
+            Calculator calc = Calculator(height, weight);
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ResultsPage(
+                  calc.calculateBMI(),
+                  calc.getResult(),
+                  calc.getInterpretation(),
+                ),
+              ),
+            );
+          }, 'Calculate'),
         ],
       ),
       /*
@@ -255,27 +253,6 @@ class _InputPageState extends State<InputPage> {
         onPressed: () {  },
         child: const Icon(Icons.add),
       ),*/
-    );
-  }
-}
-
-class RoundIconButton extends StatelessWidget {
-  const RoundIconButton(this.icon, this.onPress, {super.key});
-  final IconData icon;
-  final VoidCallback onPress;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: onPress,
-      elevation: 0.0,
-      constraints: const BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      shape: const CircleBorder(),
-      fillColor: const Color(0xFF4C4F5E),
-      child: Icon(icon),
     );
   }
 }
